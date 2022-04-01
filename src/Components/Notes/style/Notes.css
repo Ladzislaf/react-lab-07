@@ -1,0 +1,72 @@
+.noteBtn {
+    margin: 5px;
+    cursor: pointer;
+    font-size: 25px;
+    border: 2px solid #79e879;
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+    width: 150px;
+    background: rgba(9, 255, 0, 0.377)
+}
+
+.notes_container {
+    border: 5px solid red;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px 40px 50px 40px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.noteForm {
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Roboto', sans serif;
+    background: rgba(70, 199, 66, 0.37);
+    width: 700px;
+    margin: auto;
+    padding: 10px 0 30px 0;
+    border-radius: 5px;
+}
+
+.noteItem {
+    border: 2px solid green;
+    margin: 5px;
+    background: rgba(255, 213, 0, 0.72);
+}
+
+.noteItemRed {
+    border: 2px solid green;
+    margin: 5px;
+    background: rgba(255, 0, 0, 0.72);
+}
+
+.textNote {
+    font-size: 25px;
+}
+
+.titleNote {
+    font-size: 35px;
+    color: rgba(11, 91, 11, 0.82);
+}
+
+.dateNote {
+    font-size: 15px;
+}
+
+.input {
+    font-size: 25px;
+    border: 2px solid #79e879;
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+    width: 300px;
+    margin: 3px auto;
+}
+
+.noteInput {
+    font-size: 25px;
+    border: 2px solid #79e879;
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+    width: 600px;
+    margin: 3px auto;
+}

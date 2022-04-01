@@ -1,0 +1,64 @@
+.cal {
+	display: flex;
+	flex-direction: column;
+	margin: 50px auto;
+	padding: 0 0 0 0;
+	width: 421px;
+	border: 1px solid green;
+	border-radius: 2px;
+	align-items: center;
+	font-family: Roboto, sans-serif;
+	font-size: 20px;
+	text-align: center;
+}
+
+.calHead {
+	display: flex;
+	flex-wrap: wrap;
+	background-color:  rgba(56, 141, 48, 0.6);
+	font-weight: bold;
+}
+
+.calBody {
+	display: flex;
+	flex-wrap: wrap;
+	background-color: rgba(182, 243, 170, 0.6);
+}
+
+.month {
+	height: 60px;
+	width: 150px;
+	line-height: 60px;
+}
+
+.year {
+	height: 60px;
+	width: 150px;
+	line-height: 60px;
+}
+
+.cell {
+	cursor: pointer;
+	width: 60px;
+	height: 60px;
+	line-height: 60px;
+}
+
+.none {
+	color: rgba(0, 0, 0, 0.267);
+	background-color: rgba(0, 0, 0, 0.062);
+	cursor: default;
+}
+
+.curr {
+	background: rgba(105, 219, 29, 0.527);
+}
+
+.cell:hover {
+	background: rgba(0, 0, 0, 0.199);
+}
+
+.checked {
+	outline: 2px solid rgb(34, 141, 7);
+	outline-offset: -4px;
+}
