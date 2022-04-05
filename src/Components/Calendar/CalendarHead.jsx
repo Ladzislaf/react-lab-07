@@ -1,6 +1,6 @@
 const CalendarHead = ({ currentMonth, currentYear, handlePrevClick, handleNextClick }) => {
-	const days = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
-    const months = [
+	const daysShorts = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
+    const monthsNames = [
         'Январь',
         'Февраль',
         'Март',
@@ -15,21 +15,18 @@ const CalendarHead = ({ currentMonth, currentYear, handlePrevClick, handleNextCl
         'Декабрь',
     ]
 
-	let daysNotation = []
-
-	days.forEach( (element, index) => {
-		daysNotation.push(<div key={index} className={'cell'}>{element}</div>)
-	})
-
     return (
         <>
             <div className={'calHead'}>
-				{/* 12 + 1200 - чтобы индекс не был отрицательным; возможно есть решение получше...*/}
-                <div className={'month'}>{months[(currentMonth + 1200) % 12]}</div> 
+                <div className={'month'}>{monthsNames[currentMonth]}</div>
                 <div className={'year'}>{currentYear}</div> 
                 <div className={'cell'} onClick={handlePrevClick}>{'<'}</div>
                 <div className={'cell'} onClick={handleNextClick}>{'>'}</div>
-				{daysNotation}
+                {
+                    daysShorts.map((element, index) => {
+                        return <div key={index} className={'cell'}>{element}</div>
+                    })
+                }
             </div>
         </>
     )

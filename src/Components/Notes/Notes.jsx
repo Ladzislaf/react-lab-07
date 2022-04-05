@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react'
-import NotesList from "./NotesList";
+import NotesList from "./NotesList"
 
 import './style/Notes.css'
 
-// TODO: свои стилизованные кнопки и интпуты (css.modules)
-const Notes = () => {
-    const [notes, setNotes] = useState([
+const Notes = ({currentDay}) => {
+    const [notes, setNotes] = useState(
+        currentDay.notes
         // { id:1, title: 'title post1', date: new Date().toLocaleDateString(), text:'text post1' },
-    ])
+    )
 
-    const [note, setNote] = useState({title: '' , text: '', date: ''})
+    const [note, setNote] = useState({title: '' , text: ''})
 
     const [warning, setWarning] = useState('')
 
@@ -19,7 +19,7 @@ const Notes = () => {
             alert('Input note title!')
         else {
             setNotes([...notes, {...note, id: Date.now()}])
-            setNote({title: '', text: '', date: ''})
+            setNote({title: '', text: ''})
         }
     }
 
@@ -43,7 +43,7 @@ const Notes = () => {
     return (
         <>
             <form className={'noteForm'}>
-                <h2>Notes</h2>
+                <h2>Notes for {currentDay.date.toLocaleDateString()}</h2>
                 <h3 style={{color:'red'}}>{warning}</h3>
                 <input
                     className={'noteInput'}
@@ -58,13 +58,6 @@ const Notes = () => {
                     placeholder={'Note text'}
                     value={note.text}
                     onChange={e => setNote({...note, text: e.target.value})}
-                />
-                <input
-                    className={'noteInput'}
-                    type="date"
-                    placeholder={'Note date'}
-                    value={note.date}
-                    onChange={e => setNote({...note, date: e.target.value})}
                 />
                 {
                     notes.length > 3 ?

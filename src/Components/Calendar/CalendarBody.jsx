@@ -1,86 +1,65 @@
-const CalendarBody = ({ currentMonthIndex, handleDayClick, pickedDays }) => {
+const CalendarBody = ({ currentMonthIndex, currentYear, handleDayClick, pickedDaysList }) => {
 	const dateNow = new Date()
 
 	// первые дни месяцев
-	let prevDate = new Date(dateNow.getFullYear(), currentMonthIndex - 1)
-	let currentDate = new Date(dateNow.getFullYear(), currentMonthIndex)
-	let nextDate = new Date(dateNow.getFullYear(), currentMonthIndex + 1)
+	let prevMonthFirstDay = new Date(currentYear, currentMonthIndex - 1)
+	let currentMonthFirstDay = new Date(currentYear, currentMonthIndex)
+	let nextMonthFirstDat = new Date(currentYear, currentMonthIndex + 1)
 
 	// индекс дня недели для первого числа
-	let index = (currentDate.getDay() + 6) % 7
+	let firstDayInMonthIndex = (currentMonthFirstDay.getDay() + 6) % 7
 
 	// количество дней
-	let days = (nextDate - currentDate) / (1000 * 3600 * 24)
-	let prevDays = 	(currentDate - prevDate) / (1000 * 3600 * 24)
+	let currMonthDaysCount = (nextMonthFirstDat - currentMonthFirstDay) / (1000 * 3600 * 24)
+	let prevMonthDaysCount = 	(currentMonthFirstDay - prevMonthFirstDay) / (1000 * 3600 * 24)
 
-	const ROWS = 6
-	const COLS = 7
+	// индекс дня в массиве дней
+	let dayIndex = 1 - firstDayInMonthIndex
 
-	let daysMatrix = [], row = [], number = 1 - index
+	// проверка на равенство текущему дню
+	const checkCurrentDay = dateNow.getFullYear() === currentMonthFirstDay.getFullYear() &&
+		dateNow.getMonth() === currentMonthFirstDay.getMonth()
 
-	// числа, которые будут подставляться после всех чисел текущего месяца
-	let nextMonthDaysCounter = 1
+	const CAL_ROWS = 6
+	const CAL_COLS = 7
+	let daysMatrix = [], row = []
 
-	// условие проверки текущего дня
-	let currentDayCheck =
-        currentDate.getMonth() === dateNow.getMonth() &&
-        currentDate.getFullYear() === dateNow.getFullYear() 
-
-	for (let i = 0; i < ROWS; i++) {
+	// заполнение матрицы дней
+	for (let i = 0; i < CAL_ROWS; i++) {
         row = []
-        for (let j = 0; j < COLS; j++) {
+        for (let j = 0; j < CAL_COLS; j++) {
+			row.push({
+				date: new Date(currentYear, currentMonthIndex - 1, prevMonthDaysCount + dayIndex),
+				classes: 'cell',
+			})
 			// текущий день
-			if(number === new Date().getDate() && currentDayCheck){
-				row.push(<div key={j} data-user={number} className={'cell curr'} onClick={(e) => handleDayClick(e, currentDate.getMonth(), currentDate.getFullYear())}>{number}</div>)
-				number++
-				continue
-			}
-			if(number <= 0)
-				row.push(<div key={j} data-user={number} className={'cell none'}>{prevDays + number}</div>)
-			else if(number > 0 && number <= days)
-				row.push(<div key={j} data-user={number} className={'cell'} onClick={(e) => handleDayClick(e, currentDate.getMonth(), currentDate.getFullYear())}>{number}</div>)
-			else {
-				row.push(<div key={j} data-user={number} className={'cell none'}>{nextMonthDaysCounter}</div>)
-				nextMonthDaysCounter++
-			}
-			number++
+			if(dayIndex === dateNow.getDate() && checkCurrentDay)
+				row[j].classes += ' curr'
+			// дни прошлого и следующиего месяцев
+			else if(dayIndex <= 0 || dayIndex > currMonthDaysCount)
+				row[j].classes += ' none'
+			// проверка выбранных дней
+			pickedDaysList.forEach((day) => {
+				if(row[j].date.getTime() === day.date.getTime()){
+					row[j].classes += ' checked'
+				}
+			})
+			dayIndex++
         }
         daysMatrix.push(row)
     }
 
-	// проверка, какие дни выбраны
-	for(let i = 0; i < ROWS; i++) {
-		for (let j = 0; j < COLS; j++) {
-			for (let k = 0; k < pickedDays.length; k++) {
-				if (
-					daysMatrix[i][j].props.children === pickedDays[k].getDate() &&
-					daysMatrix[i][j].props.className !== 'cell none' &&
-					currentDate.getMonth() === pickedDays[k].getMonth() &&
-					currentDate.getFullYear() === pickedDays[k].getFullYear()
-				) {
-					let number = daysMatrix[i][j].props.children
-					daysMatrix[i][j] = (
-						<div
-							key={j}
-							data-user={number}
-							className={'cell checked'}
-							onClick={(e) =>
-								handleDayClick(
-									e,
-									currentDate.getMonth(),
-									currentDate.getFullYear()
-								)
-							}
-						>
-							{number}
-						</div>
-					)
-				}
+	return (
+		<div className={'calBody'}>
+			{
+				daysMatrix.map((row) => {
+					return row.map((cell, i) => {
+						return <div key={i} className={cell.classes} onClick={() => handleDayClick(cell)}>{cell.date.getDate()}</div>
+					})
+				})
 			}
-		}
-	}
-	
-	return <div className={'calBody'}>{daysMatrix}</div>
+		</div>
+	)
 }
 
 export default CalendarBody
