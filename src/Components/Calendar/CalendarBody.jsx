@@ -1,4 +1,4 @@
-const CalendarBody = ({ currentMonthIndex, currentYear, handleDayClick, pickedDaysList }) => {
+const CalendarBody = ({ currentMonthIndex, currentYear, handleDayClick, pickedDaysList, checkedDaysList }) => {
 	const dateNow = new Date()
 
 	// первые дни месяцев
@@ -40,8 +40,14 @@ const CalendarBody = ({ currentMonthIndex, currentYear, handleDayClick, pickedDa
 				row[j].classes += ' none'
 			// проверка выбранных дней
 			pickedDaysList.forEach((day) => {
-				if(row[j].date.getTime() === day.date.getTime()){
+				if(row[j].date.getTime() === day.date.getTime()) {
 					row[j].classes += ' checked'
+				}
+			})
+			// проверка дней с заметками
+			checkedDaysList.forEach((day) => {
+				if(row[j].date.getTime() === day.day.getTime() && day.notes.length !== 0) {
+					row[j].classes += ' noted'
 				}
 			})
 			dayIndex++

@@ -1,12 +1,16 @@
-import React from 'react'
-import Notes from "./Notes/Notes";
+import React, {useState} from 'react'
+import Notes from "./Notes/Notes"
+import Calendar from "./Calendar/Calendar"
 
-const list = []
+const checkedDaysList = []
 
-const Scheduler = ({pickedDay}) => {
+const Scheduler = () => {
+    const [pickedDay, setPickedDay] = useState({})
+
     return (
         <>
-            {pickedDay.date && <Notes list={list} pickedDay={pickedDay}/>}
+            <Calendar setPickedDay={setPickedDay} checkedDaysList={checkedDaysList}/>
+            {pickedDay.date && <Notes pickedDaysList={checkedDaysList} pickedDay={pickedDay}/>}
         </>
     )
 }

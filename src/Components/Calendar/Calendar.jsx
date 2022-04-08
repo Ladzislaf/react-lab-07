@@ -1,16 +1,13 @@
 import {useState} from 'react'
 import CalendarBody from './CalendarBody'
 import CalendarHead from './CalendarHead'
-import Scheduler from "../Scheduler"
 
 import './style/Calendar.css'
 
-const Calendar = () => {
+const Calendar = ({setPickedDay, checkedDaysList}) => {
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
     const [pickedDaysList, setPickedDaysList] = useState([])
-
-    const [pickedDay, setPickedDay] = useState({})
 
     const handlePrevClick = () => {
         (currentMonth === 0) ? setCurrentMonth(11) : setCurrentMonth(currentMonth - 1)
@@ -55,9 +52,9 @@ const Calendar = () => {
                     currentYear={currentYear}
                     handleDayClick={handleDayClick}
                     pickedDaysList={pickedDaysList}
+                    checkedDaysList={checkedDaysList}
                 />
             </div>
-            <Scheduler pickedDay={pickedDay}/>
         </>
     )
 }

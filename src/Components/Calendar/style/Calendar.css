@@ -44,6 +44,10 @@
 	line-height: 60px;
 }
 
+.cell:hover {
+	background: rgba(0, 0, 0, 0.199);
+}
+
 .none {
 	color: rgba(0, 0, 0, 0.267);
 	background-color: rgba(0, 0, 0, 0.062);
@@ -54,11 +58,11 @@
 	background: rgba(105, 219, 29, 0.527);
 }
 
-.cell:hover {
-	background: rgba(0, 0, 0, 0.199);
-}
-
 .checked {
 	outline: 2px solid rgb(34, 141, 7);
 	outline-offset: -4px;
+}
+
+.noted {
+	background: rgb(13, 217, 170);
 }

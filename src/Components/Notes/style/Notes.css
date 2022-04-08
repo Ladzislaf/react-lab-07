@@ -68,3 +68,12 @@
     width: 600px;
     margin: 3px auto;
 }
+
+.noteItemBtn {
+    margin: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    border: 2px solid #79e879;
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+}

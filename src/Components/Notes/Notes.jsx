@@ -5,7 +5,7 @@ import './style/Notes.css'
 
 let currentSchedule = {}
 
-const Notes = ({list, pickedDay}) => {
+const Notes = ({pickedDaysList, pickedDay}) => {
     const [notes, setNotes] = useState([])
     const [note, setNote] = useState({title: '', text: ''})
     const [warning, setWarning] = useState('')
@@ -13,23 +13,17 @@ const Notes = ({list, pickedDay}) => {
     useEffect(() => {
         currentSchedule = {day: pickedDay.date, notes: []}
 
-        for (let i = 0; i < list.length; i++) {
-            if (list[i].day.getTime() === currentSchedule.day.getTime()) {
-                console.log(list[i], 'list[i]')
-                currentSchedule.notes = list[i].notes
-                list.splice(i, 1)
+        for (let i = 0; i < pickedDaysList.length; i++)
+            if (pickedDaysList[i].day.getTime() === currentSchedule.day.getTime()) {
+                currentSchedule.notes = pickedDaysList[i].notes
+                pickedDaysList.splice(i, 1)
             }
-        }
 
-        console.log(currentSchedule)
-        list.push(currentSchedule)
+        pickedDaysList.push(currentSchedule)
 
-        for (let i = 0; i < list.length; i++) {
-            if (list[i].day.toString() === pickedDay.date.toString()) {
-                setNotes(list[i].notes)
-            }
-        }
-        console.log(list)
+        for (let i = 0; i < pickedDaysList.length; i++)
+            if (pickedDaysList[i].day.getTime() === pickedDay.date.getTime())
+                setNotes(pickedDaysList[i].notes)
     }, [pickedDay])
 
     useEffect(() => {
@@ -46,14 +40,24 @@ const Notes = ({list, pickedDay}) => {
         }
     }
 
-    const deleteFirstNote = (e) => {
+    const deleteAll = (e) => {
         e.preventDefault()
-        setNotes(notes.filter((p, index) => index !== 0))
+        setNotes([])
     }
 
-    const deleteLastNote = (e) => {
-        e.preventDefault()
-        setNotes(notes.filter((p, index) => index !== notes.length - 1))
+    const deleteNote = (noteItem) => {
+        setNotes(notes.filter((n) => n.id !== noteItem.id))
+    }
+
+    // мб можно сделать решение лучше, но мне лень
+    const changeNote = (noteItem) => {
+        for (let i=0; i<notes.length; i++)
+            if(notes[i].id === noteItem.id) {
+                let copy = notes.slice()
+                copy[i] = {...note, id: Date.now()}
+                setNotes(copy)
+            }
+        setNote({title: '', text: ''})
     }
 
     useEffect(() => {
@@ -80,18 +84,11 @@ const Notes = ({list, pickedDay}) => {
                     value={note.text}
                     onChange={e => setNote({...note, text: e.target.value})}
                 />
-                {
-                    notes.length > 3 ?
-                        <>
-                            <button className={'noteBtn'} onClick={deleteFirstNote}>Delete first</button>
-                            <button className={'noteBtn'} onClick={addNewNote}>New note</button>
-                            <button className={'noteBtn'} onClick={deleteLastNote}>Delete last</button>
-                        </>
-                        : <button className={'noteBtn'} onClick={addNewNote}>New note</button>
-                }
+                <button className={'noteBtn'} onClick={addNewNote}>New note</button>
+                <button className={'noteBtn'} onClick={deleteAll}>Delete all</button>
             </form>
             <br/>
-            <NotesList notes={notes}/>
+            {notes.length !== 0 && <NotesList notes={notes} deleteNote={deleteNote} changeNote={changeNote}/>}
         </>
 
     )

@@ -1,10 +1,10 @@
 import React from 'react'
-import Calendar from "./Components/Calendar/Calendar";
+import Scheduler from "./Components/Scheduler"
 
 const App = () => {
     return (
         <div>
-            <Calendar/>
+            <Scheduler/>
         </div>
     )
 }
