@@ -1,12 +1,13 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import Notes from "./Notes/Notes";
 
+const list = []
+
 const Scheduler = ({pickedDay}) => {
-    console.log(pickedDay, 'pick')
     return (
-        <div>
-            {pickedDay && <Notes currentDay={pickedDay}/>}
-        </div>
+        <>
+            {pickedDay.date && <Notes list={list} pickedDay={pickedDay}/>}
+        </>
     )
 }
 

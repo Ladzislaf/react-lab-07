@@ -10,10 +10,11 @@
 }
 
 .notes_container {
-    border: 5px solid red;
+    border: 3px solid #79e879;
     border-radius: 5px;
     padding: 20px;
-    margin: 10px 40px 50px 40px;
+    margin: 0 100px 100px 100px;
+    background: rgba(111, 197, 108, 0.17);
     font-family: 'Roboto', sans-serif;
 }
 
@@ -32,6 +33,7 @@
     border: 2px solid green;
     margin: 5px;
     background: rgba(255, 213, 0, 0.72);
+    word-wrap: break-word;
 }
 
 .noteItemRed {
@@ -47,10 +49,6 @@
 .titleNote {
     font-size: 35px;
     color: rgba(11, 91, 11, 0.82);
-}
-
-.dateNote {
-    font-size: 15px;
 }
 
 .input {

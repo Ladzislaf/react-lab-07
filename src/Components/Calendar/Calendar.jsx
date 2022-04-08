@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import CalendarBody from './CalendarBody'
 import CalendarHead from './CalendarHead'
 import Scheduler from "../Scheduler"
@@ -10,7 +10,7 @@ const Calendar = () => {
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
     const [pickedDaysList, setPickedDaysList] = useState([])
 
-    const [pickedDay, setPickedDay] = useState(null)
+    const [pickedDay, setPickedDay] = useState({})
 
     const handlePrevClick = () => {
         (currentMonth === 0) ? setCurrentMonth(11) : setCurrentMonth(currentMonth - 1)
@@ -26,23 +26,18 @@ const Calendar = () => {
         }
     }
 
-    // useEffect(() => {
-    //     console.log(pickedDay)
-    // }, [pickedDay])
-
     const handleDayClick = (pickDay) => {
-        setPickedDay({...pickDay, notes: [], picks: 1})
-
         for (let i = 0; i < pickedDaysList.length; i++) {
             if (pickedDaysList[i].date.toString() === pickDay.date.toString()) {
                 let copy = pickedDaysList.slice()
                 copy.splice(i, 1)
                 setPickedDaysList(copy)
-                setPickedDay(null)
+                setPickedDay({})
                 return
             }
         }
 
+        setPickedDay({...pickDay})
         setPickedDaysList([...pickedDaysList, pickDay])
     }
 

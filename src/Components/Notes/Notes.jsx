@@ -3,19 +3,42 @@ import NotesList from "./NotesList"
 
 import './style/Notes.css'
 
-const Notes = ({currentDay}) => {
-    const [notes, setNotes] = useState(
-        currentDay.notes
-        // { id:1, title: 'title post1', date: new Date().toLocaleDateString(), text:'text post1' },
-    )
+let currentSchedule = {}
 
-    const [note, setNote] = useState({title: '' , text: ''})
-
+const Notes = ({list, pickedDay}) => {
+    const [notes, setNotes] = useState([])
+    const [note, setNote] = useState({title: '', text: ''})
     const [warning, setWarning] = useState('')
+
+    useEffect(() => {
+        currentSchedule = {day: pickedDay.date, notes: []}
+
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].day.getTime() === currentSchedule.day.getTime()) {
+                console.log(list[i], 'list[i]')
+                currentSchedule.notes = list[i].notes
+                list.splice(i, 1)
+            }
+        }
+
+        console.log(currentSchedule)
+        list.push(currentSchedule)
+
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].day.toString() === pickedDay.date.toString()) {
+                setNotes(list[i].notes)
+            }
+        }
+        console.log(list)
+    }, [pickedDay])
+
+    useEffect(() => {
+        currentSchedule.notes = notes
+    }, [notes])
 
     const addNewNote = (e) => {
         e.preventDefault()
-        if(note.title === '')
+        if (note.title === '')
             alert('Input note title!')
         else {
             setNotes([...notes, {...note, id: Date.now()}])
@@ -34,17 +57,15 @@ const Notes = ({currentDay}) => {
     }
 
     useEffect(() => {
-        if(notes.length < 8)
-            setWarning('')
-        else
-            setWarning('you have a lot of notes')
+        if (notes.length < 8) setWarning('')
+        else setWarning('you have a lot of notes')
     }, [notes])
 
     return (
         <>
             <form className={'noteForm'}>
-                <h2>Notes for {currentDay.date.toLocaleDateString()}</h2>
-                <h3 style={{color:'red'}}>{warning}</h3>
+                <h2>Notes for {pickedDay.date && pickedDay.date.toLocaleDateString()}</h2>
+                <h3 style={{color: 'red'}}>{warning}</h3>
                 <input
                     className={'noteInput'}
                     type="text"
@@ -70,9 +91,9 @@ const Notes = ({currentDay}) => {
                 }
             </form>
             <br/>
-
             <NotesList notes={notes}/>
         </>
+
     )
 }
 
