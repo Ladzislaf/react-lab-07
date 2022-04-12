@@ -9,8 +9,8 @@ const Scheduler = () => {
 
     return (
         <>
-            <Calendar setPickedDay={setPickedDay} checkedDaysList={checkedDaysList}/>
-            {pickedDay.date && <Notes pickedDaysList={checkedDaysList} pickedDay={pickedDay}/>}
+            <Calendar pickedDay={pickedDay} setPickedDay={setPickedDay} checkedDaysList={checkedDaysList}/>
+            {pickedDay.date && <Notes checkedDaysList={checkedDaysList} pickedDay={pickedDay}/>}
         </>
     )
 }

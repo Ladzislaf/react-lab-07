@@ -5,7 +5,7 @@ import './style/Notes.css'
 
 let currentSchedule = {}
 
-const Notes = ({pickedDaysList, pickedDay}) => {
+const Notes = ({checkedDaysList, pickedDay}) => {
     const [notes, setNotes] = useState([])
     const [note, setNote] = useState({title: '', text: ''})
     const [warning, setWarning] = useState('')
@@ -13,17 +13,17 @@ const Notes = ({pickedDaysList, pickedDay}) => {
     useEffect(() => {
         currentSchedule = {day: pickedDay.date, notes: []}
 
-        for (let i = 0; i < pickedDaysList.length; i++)
-            if (pickedDaysList[i].day.getTime() === currentSchedule.day.getTime()) {
-                currentSchedule.notes = pickedDaysList[i].notes
-                pickedDaysList.splice(i, 1)
+        for (let i = 0; i < checkedDaysList.length; i++)
+            if (checkedDaysList[i].day.getTime() === currentSchedule.day.getTime()) {
+                currentSchedule.notes = checkedDaysList[i].notes
+                checkedDaysList.splice(i, 1)
             }
 
-        pickedDaysList.push(currentSchedule)
+        checkedDaysList.push(currentSchedule)
 
-        for (let i = 0; i < pickedDaysList.length; i++)
-            if (pickedDaysList[i].day.getTime() === pickedDay.date.getTime())
-                setNotes(pickedDaysList[i].notes)
+        for (let i = 0; i < checkedDaysList.length; i++)
+            if (checkedDaysList[i].day.getTime() === pickedDay.date.getTime())
+                setNotes(checkedDaysList[i].notes)
     }, [pickedDay])
 
     useEffect(() => {

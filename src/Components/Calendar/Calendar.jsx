@@ -4,7 +4,7 @@ import CalendarHead from './CalendarHead'
 
 import './style/Calendar.css'
 
-const Calendar = ({setPickedDay, checkedDaysList}) => {
+const Calendar = ({pickedDay, setPickedDay, checkedDaysList}) => {
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
     const [pickedDaysList, setPickedDaysList] = useState([])
@@ -23,18 +23,30 @@ const Calendar = ({setPickedDay, checkedDaysList}) => {
         }
     }
 
+    // клик на день одни раз - зеленое выделение (достигается setPickedDaysList)
+    // клик на день из pickedDaysList - появление заметок (достигается setPickedDay)
+    // клик на невыделенный день - пропадают заметки, + setPickedDaysList
+
     const handleDayClick = (pickDay) => {
         for (let i = 0; i < pickedDaysList.length; i++) {
+            // второй клик
+            if (pickedDaysList[i].date.toString() === pickDay.date.toString() && pickedDay.date) {
+                if (pickedDay.date.toString() === pickDay.date.toString()) {
+                    let copy = pickedDaysList.slice()
+                    copy.splice(i, 1)
+                    setPickedDaysList(copy)
+                    setPickedDay({})
+                } else {
+                    setPickedDay({...pickDay})
+                }
+                return
+            }
             if (pickedDaysList[i].date.toString() === pickDay.date.toString()) {
-                let copy = pickedDaysList.slice()
-                copy.splice(i, 1)
-                setPickedDaysList(copy)
-                setPickedDay({})
+                setPickedDay({...pickDay})
                 return
             }
         }
-
-        setPickedDay({...pickDay})
+        setPickedDay({})
         setPickedDaysList([...pickedDaysList, pickDay])
     }
 
