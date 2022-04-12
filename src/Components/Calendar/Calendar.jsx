@@ -23,10 +23,6 @@ const Calendar = ({pickedDay, setPickedDay, checkedDaysList}) => {
         }
     }
 
-    // клик на день одни раз - зеленое выделение (достигается setPickedDaysList)
-    // клик на день из pickedDaysList - появление заметок (достигается setPickedDay)
-    // клик на невыделенный день - пропадают заметки, + setPickedDaysList
-
     const handleDayClick = (pickDay) => {
         for (let i = 0; i < pickedDaysList.length; i++) {
             // второй клик
